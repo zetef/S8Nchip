@@ -20,7 +20,7 @@ int main( int argc, char *argv[] )
 
         SDL_Event e;
 
-        /*if ( argc < 2 )
+        if ( argc < 2 )
         {
             puts( "input a file...very pleaseeee! c:" );
             return 1;
@@ -30,8 +30,8 @@ int main( int argc, char *argv[] )
             puts( "much files...very few features...wow :c" );
             return 1;
         }
-        else*/
-            chip_loadGame( play->cpu, /*argv[ 1 ]*/"MAZE" );
+        else
+            chip_loadGame( play->cpu, argv[ 1 ] );
 
         while ( !quit )
 		{
