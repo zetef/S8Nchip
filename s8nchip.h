@@ -20,29 +20,28 @@
 
 struct chip
 {
-	void ( *chip_initialize 	)( struct chip *cpu							);
-	bool ( *chip_loadGame 		)( struct chip *cpu, const char *filename 	);
-	void ( *chip_handleInput 	)( struct chip *cpu, SDL_Event *event 		); 
-	void ( *chip_emulateCycle 	)( struct chip *cpu 						);
-	void ( *chip_free 			)( struct chip *cpu 						);
-    
-	bool drawFlag; //doar 0x00E0(clear screen) si 0xDXYN(draw sprite to screen) seteaza flagul true
+    bool drawFlag; //doar 0x00E0(clear screen) si 0xDXYN(draw sprite to screen) seteaza flagul true
     uint8_t gfx[ MAX_GFX ];
     uint8_t key[ MAX_KEY ]; //0xF
 
-	uint8_t memory[ MAX_MEMORY ];
-	uint8_t V[ MAX_V_REGISTERS ];
+    uint8_t memory[ MAX_MEMORY ];
+    uint8_t V[ MAX_V_REGISTERS ];
 
-	uint16_t stack[ MAX_STACKS ]; 
+    uint16_t stack[ MAX_STACKS ];
     uint16_t sp;
 
     uint16_t opcode;
     uint16_t I;
     uint16_t pc;
-	
+
 	uint8_t delayTimer;
     uint8_t soundTimer;
-	
+
 	char *chipName;
 };
 
+void chip_initialize( struct chip *cpu );
+bool chip_loadGame( struct chip *cpu, const char *filename );
+void chip_handleInput( struct chip *cpu, SDL_Event *event );
+void chip_emulateCycle( struct chip *cpu );
+void chip_free( struct chip *cpu );
