@@ -461,6 +461,8 @@ void chip_free( struct chip *cpu )
 	if ( cpu != NULL ) {
 		puts( "Freeing chip..." );
 		free( cpu );
+	} else {
+		puts( "No chip to free!" );
 	}
 }
 

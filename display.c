@@ -18,5 +18,7 @@ void display_free( struct display *scrn )
 		puts( "Freeing display..." );
 		
 		free( scrn );
+	} else {
+		puts( "No dispaly to free!" );
 	}
 }

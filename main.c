@@ -8,6 +8,11 @@
 
 int main( int argc, char *argv[] )
 {
+	if ( argc < 2 || argc > 2 ) {
+		puts( "Usage: S8Nchip [ game_name ]" );
+		return 1;
+	}
+	
 	struct chip *s8nchip = malloc( sizeof *s8nchip );
 	struct display *screen = malloc( sizeof *screen );
 	struct game *play = malloc( sizeof *play );
@@ -23,17 +28,9 @@ int main( int argc, char *argv[] )
 
         SDL_Event e;
 
-        if ( argc < 2 || argc > 2 ) {
-            puts( "Usage: S8Nchip [ game_name ]" );
-            game_close( play );
-			return 1;
-        } else {
-			chip_loadGame( play->cpu, argv[ 1 ] );
-		}
+		chip_loadGame( play->cpu, argv[ 1 ] );
 
         while ( !quit ) {
-            srand( time( NULL ) );
-
             chip_emulateCycle( play->cpu );
 
             while ( SDL_PollEvent( &e ) != 0 ) {
