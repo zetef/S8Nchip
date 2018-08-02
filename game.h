@@ -10,13 +10,12 @@
 
 struct game
 {
-	bool ( *game_initialize )( struct game *self, 
-							   struct display *scrn, 
-							   struct chip *cpu );
-							   
-	void ( *game_close 		)( struct game *self );
-	
 	struct chip 	*cpu;
 	struct display  *screen;
-	
 };
+
+bool game_initialize( struct game *self,
+                      struct display *scrn,
+                      struct chip *cpu );
+
+void game_close( struct game *self );
