@@ -85,12 +85,27 @@ bool game_initialize( struct game *self,
 	return true;
 }
 
+void game_free( struct game *play )
+{
+	if ( play != NULL ) {
+		puts( "Freeing game..." );
+	}
+}
+
 void game_close( struct game *self )
 {
-	puts( "Closing..." );
+	if ( self != NULL ) {
+		puts( "Closing..." );
 	
-	chip_free( self->cpu );
-	display_free( self->screen );
+		puts( "Freeing play screen..." );
+		display_free( self->screen );
+
+		puts( "Freeing play cpu..." );
+		chip_free( self->cpu );
+
+		puts( "Freeing play..." );
+		game_free( self );
+	}
 		
 	SDL_Quit();
 }

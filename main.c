@@ -15,35 +15,32 @@ int main( int argc, char *argv[] )
     if ( !game_initialize( play, screen, s8nchip ) ) {
         puts( "could not init!" );
     } else {
-        srand( time( NULL ) );
+		chip_free( s8nchip );
+		display_free( screen );
+		
+		srand( time( NULL ) );
         bool quit = false;
 
         SDL_Event e;
 
-        if ( argc < 2 )
-        {
-            puts( "input a file...very pleaseeee! c:" );
-            return 1;
-        }
-        else if ( argc > 2 )
-        {
-            puts( "much files...very few features...wow :c" );
-            return 1;
-        }
-        else
-            chip_loadGame( play->cpu, argv[ 1 ] );
+        if ( argc < 2 || argc > 2 ) {
+            puts( "Usage: S8Nchip [ game_name ]" );
+            game_close( play );
+			return 1;
+        } else {
+			chip_loadGame( play->cpu, argv[ 1 ] );
+		}
 
-        while ( !quit )
-		{
+        while ( !quit ) {
             srand( time( NULL ) );
 
             chip_emulateCycle( play->cpu );
 
-            while ( SDL_PollEvent( &e ) != 0 ){
-                if ( e.type == SDL_QUIT ){
+            while ( SDL_PollEvent( &e ) != 0 ) {
+                if ( e.type == SDL_QUIT ) {
                     quit = true;
-                } else if ( e.key.type == SDL_KEYDOWN ){
-                    if ( e.key.keysym.sym == SDLK_ESCAPE ){
+                } else if ( e.key.type == SDL_KEYDOWN ) {
+                    if ( e.key.keysym.sym == SDLK_ESCAPE ) {
                         quit = true;
                     }
                 }
@@ -97,9 +94,8 @@ int main( int argc, char *argv[] )
 			SDL_Delay( 2 );
 		}
 	}
-	chip_free( s8nchip );
-    display_free( screen );
-	game_close();
+	
+	game_close( play );
 
     return 0;
 }

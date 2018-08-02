@@ -18,4 +18,6 @@ bool game_initialize( struct game *self,
                       struct display *scrn,
                       struct chip *cpu );
 
+void game_free( struct game *play );
+
 void game_close( struct game *self );
