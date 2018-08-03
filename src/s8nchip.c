@@ -24,35 +24,21 @@ unsigned char s8nFontset[80] =
 
 void chip_initialize( struct chip *cpu )
 {
-    cpu->pc          = 0x200;    //application starts/loads at 0x200
-    cpu->opcode      = 0;        //reset opcode
-    cpu->I           = 0;        //reset index register
-    cpu->sp          = 0;        //reset stack pointer
-    cpu->drawFlag    = true;
-
-    /*for ( int i = 0; i < MAX_GFX; ++i )
-    {
-        cpu->gfx[ i ] = 0;
-    }*/
-	
 	memset( cpu->gfx, 0, sizeof( cpu->gfx ) );
-
-    /*for ( int i = 0; i < 16; ++i )
-    {
-        cpu->stack[ i ] = 0; //clear the stack
-        cpu->key[ i ] = 0;
-        cpu->V[ i ] = 0; //clear registers
-    }
-	*/
 	memset( cpu->stack, 0, sizeof( cpu->stack ) );
+	memset( cpu->key, 0, sizeof( cpu->key ) );
+	memset( cpu->V, 0, sizeof( cpu->V ) );
+	memset( cpu->memory, 0, sizeof( cpu->memory ) );
+	memcpy( cpu->memory, s8nFontset, sizeof( s8nFontset ) );
+	
+    cpu->pc          			= INTERPRETER_MEMORY_END;    //application starts/loads at 0x200
+    cpu->opcode.instruction      = 0;        				//reset opcode
+    cpu->I           			= 0;        			   //reset index register
+    cpu->sp          			= 0;                      //reset stack pointer
+    cpu->drawFlag    			= true;                  //draw at least once the screen
+	cpu->delayTimer  			= 0;                    //reset delay timer
+	cpu->soundTimer 			= 0;                   //reset sound timer
 
-    for ( int i = 0; i < MAX_MEMORY; ++i )
-        cpu->memory[ i ] = 0; //clear the memory
-
-    for ( int i = 0; i < FONTSET_SIZE; ++i ) //for later
-        cpu->memory[ i ] = s8nFontset[ i ];
-
-    cpu->delayTimer = cpu->soundTimer = 0; //reset timers
 	srand( time( NULL ) );
 }
 
@@ -91,10 +77,10 @@ bool chip_loadGame( struct chip *cpu, const char *filename )
 	}
 
 	// Copy buffer to Chip8 memory
-	if( ( MAX_MEMORY - INTERPRETER_MEMORY ) > lSize )
+	if( ( MAX_MEMORY - INTERPRETER_MEMORY_END ) > lSize )
 	{
 		for( unsigned int i = 0; i < lSize; ++i )
-			cpu->memory[ i + INTERPRETER_MEMORY ] = buffer[ i ];
+			cpu->memory[ i + INTERPRETER_MEMORY_END ] = buffer[ i ];
 	}
 	else
 		printf( "Error: ROM too big for memory" );
@@ -155,18 +141,40 @@ void chip_handleInput( struct chip *cpu, SDL_Event *event )
     }
 }
 
-void chip_emulateCycle( struct chip *cpu )
+void chip_fetch( struct chip *cpu )
 {
-    cpu->opcode = cpu->memory[ cpu->pc ] << 8 | cpu->memory[ cpu->pc + 1 ];//fetch opcode
+	cpu->opcode.instruction 
+				= cpu->memory[ cpu->pc ] << 8 | cpu->memory[ cpu->pc + 1 ];//fetch opcode
     //0110101 << 8 = 011010100000000 |
     //                      10111010 =
     //               011010110111010 = opcode :)
+}
 
+void chip_update_timers( struct chip *cpu )
+{
+	if ( cpu->delayTimer ) cpu->delayTimer--;
+	if ( cpu->soundTimer ) cpu->soundTimer--;
+}
+
+void chip_cycle( struct chip *cpu )
+{
+	chip_fetch( cpu );
+	chip_execute( cpu );
+	chip_update_timers( cpu );
+}
+
+void chip_execute( struct chip *cpu )
+{
+	/*
     unsigned char x = ( cpu->opcode & 0x0F00 ) >> 8;
     unsigned char y = ( cpu->opcode & 0x00F0 ) >> 4;
     unsigned short nnn = cpu->opcode & 0x0FFF;
     unsigned char kk = cpu->opcode & 0x00FF;
-
+	*/
+	cpu->pc += 2;
+	uint8_t vx = cpu...
+	uint8_t vy = cpu...
+ 
     switch ( cpu->opcode & 0xF000 )
     {
         case 0x0000:
@@ -448,16 +456,6 @@ void chip_emulateCycle( struct chip *cpu )
             printf( "unknown opcode: 0x%X\n", cpu->opcode );
             cpu->pc += 2;
         break;
-    }
-
-    if ( cpu->delayTimer > 0 )
-        --cpu->delayTimer;
-
-    if ( cpu->soundTimer > 0 )
-    {
-        if ( cpu->soundTimer == 1 )
-            puts( "BEEP!\a\n" );
-        --cpu->soundTimer;
     }
 }
 

@@ -6,10 +6,6 @@
 #include <stdbool.h>
 #include <string.h>
 
-//#define SCREEN_WIDTH 64
-//#define SCREEN_HEIGHT 32
-//#define MAGNIFIER 10
-
 struct display
 {
 	int DEFAULT_DRIVER; // = -1

@@ -6,18 +6,14 @@
 #include <stdbool.h>
 #include <string.h>
 #include <time.h>
-
-///
-///TODO:
-///make this code work
-///
+#include "opcode.h"
 
 #define MAX_GFX 64 * 32
 #define MAX_KEY 16
 #define MAX_MEMORY 4096
 #define MAX_V_REGISTERS 16
 #define MAX_STACKS 16
-#define INTERPRETER_MEMORY 512
+#define INTERPRETER_MEMORY_END 512
 #define FONTSET_SIZE 80
 
 struct chip
@@ -32,18 +28,21 @@ struct chip
     uint16_t stack[ MAX_STACKS ];
     uint16_t sp;
 
-    uint16_t opcode;
+    union opcode opcode;
     uint16_t I;
     uint16_t pc;
 
 	uint8_t delayTimer;
     uint8_t soundTimer;
 
-	char *chipName;
+	//char *chipName; //for later
 };
 
 void chip_initialize( struct chip *cpu );
 bool chip_loadGame( struct chip *cpu, const char *filename );
 void chip_handleInput( struct chip *cpu, SDL_Event *event );
-void chip_emulateCycle( struct chip *cpu );
+void chip_fetch( struct chip *cpu );
+void chip_update_timers( struct chip *cpu );
+void chip_execute( struct chip *cpu );
+void chip_cycle( struct chip *cpu );
 void chip_free( struct chip *cpu );

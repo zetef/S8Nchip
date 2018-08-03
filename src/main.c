@@ -29,7 +29,7 @@ int main( int argc, char *argv[] )
         while ( !play->play_state->quit ) {
 			//chip_cycle( cpu ); //v0.2-alpha sneek-peek
 			
-            chip_emulateCycle( play->cpu );
+            chip_cycle( play->cpu );
 
 			state_handle( play->play_state, play->cpu );
 
