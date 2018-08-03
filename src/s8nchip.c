@@ -30,17 +30,21 @@ void chip_initialize( struct chip *cpu )
     cpu->sp          = 0;        //reset stack pointer
     cpu->drawFlag    = true;
 
-    for ( int i = 0; i < MAX_GFX; ++i )
+    /*for ( int i = 0; i < MAX_GFX; ++i )
     {
         cpu->gfx[ i ] = 0;
-    }
+    }*/
+	
+	memset( cpu->gfx, 0, sizeof( cpu->gfx ) );
 
-    for ( int i = 0; i < 16; ++i )
+    /*for ( int i = 0; i < 16; ++i )
     {
         cpu->stack[ i ] = 0; //clear the stack
         cpu->key[ i ] = 0;
         cpu->V[ i ] = 0; //clear registers
     }
+	*/
+	memset( cpu->stack, 0, sizeof( cpu->stack ) );
 
     for ( int i = 0; i < MAX_MEMORY; ++i )
         cpu->memory[ i ] = 0; //clear the memory
@@ -49,6 +53,7 @@ void chip_initialize( struct chip *cpu )
         cpu->memory[ i ] = s8nFontset[ i ];
 
     cpu->delayTimer = cpu->soundTimer = 0; //reset timers
+	srand( time( NULL ) );
 }
 
 bool chip_loadGame( struct chip *cpu, const char *filename )

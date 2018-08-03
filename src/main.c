@@ -23,8 +23,6 @@ int main( int argc, char *argv[] )
     } else {
 		chip_free( s8nchip );
 		display_free( screen );
-		
-		srand( time( NULL ) );
 
 		chip_loadGame( play->cpu, argv[ 1 ] );
 
