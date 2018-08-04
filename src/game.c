@@ -76,7 +76,7 @@ Allocating memory for cpu...\n" );
 		if ( !SDL_SetHint( SDL_HINT_RENDER_SCALE_QUALITY, "1" ) )
             puts( "Linear texture filtering is not enabled" );
 			
-		self->screen->window = SDL_CreateWindow( "ok lol",
+		self->screen->window = SDL_CreateWindow( "S8Nchip v0.2-alpha",
 												 SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
 												 self->screen->DISPLAY_WIDTH, self->screen->DISPLAY_HEIGHT,
 												 SDL_WINDOW_SHOWN );
