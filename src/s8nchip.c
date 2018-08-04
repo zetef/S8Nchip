@@ -172,14 +172,14 @@ void chip_execute( struct chip *cpu )
 					memset( cpu->gfx, 0, sizeof( cpu->gfx ) );
 					cpu->drawFlag = true;
 					cpu->pc += 2;
-					printf( "00E0 Clear screen\n" );
+					//printf( "00E0 Clear screen\n" );
 				break;
 
 				case 0x000E: // return from subroutine
 					--cpu->sp;
 					cpu->pc = cpu->stack[ cpu->sp ];
 					cpu->pc += 2;
-					printf( "00EE Return from subroutine\n" );
+					//printf( "00EE Return from subroutine\n" );
 				break;
 
 				default:
@@ -189,14 +189,14 @@ void chip_execute( struct chip *cpu )
 
         case 0x1000: //jump to location nnn
             cpu->pc = cpu->opcode & 0x0FFF;
-			printf( "1NNN Jump to NNN\n" );
+			//printf( "1NNN Jump to NNN\n" );
         break;
 
         case 0x2000: //call subroutine at nnn
             cpu->stack[ cpu->sp ] = cpu->pc;
 			++cpu->sp;
             cpu->pc = cpu->opcode & 0x0FFF;
-			printf( "2NNN Call NNN\n" );
+			//printf( "2NNN Call NNN\n" );
 		break;
 
         case 0x3000: //skip instruction if Vx == kk
@@ -204,7 +204,7 @@ void chip_execute( struct chip *cpu )
                 cpu->pc += 4;
             else
                 cpu->pc += 2;
-			printf( "3XNN Skip next instruction if VX == NN\n" );
+			//printf( "3XNN Skip next instruction if VX == NN\n" );
         break;
 
         case 0x4000: //skip instruction if Vx != kk
@@ -212,7 +212,7 @@ void chip_execute( struct chip *cpu )
                 cpu->pc += 4;
             else
                 cpu->pc += 2;
-				printf( "4XNN Skip next instruction if VX != NN\n" );
+				//printf( "4XNN Skip next instruction if VX != NN\n" );
         break;
 
         case 0x5000: //skip instruction if Vx == Vy
@@ -220,19 +220,19 @@ void chip_execute( struct chip *cpu )
                 cpu->pc += 4;
             else
                 cpu->pc += 2;
-			printf( "5XY0 Skip next instruction if VX == VY\n" );
+			//printf( "5XY0 Skip next instruction if VX == VY\n" );
         break;
 
         case 0x6000: //Vx = kk
             cpu->V[ ( cpu->opcode & 0x0F00 ) >> 8 ] = cpu->opcode & 0x00FF;
             cpu->pc += 2;
-			printf( "6XNN Set VX = NN\n" );
+			//printf( "6XNN Set VX = NN\n" );
         break;
 
         case 0x7000: //Vx += kk
             cpu->V[ ( cpu->opcode & 0x0F00 ) >> 8 ] += cpu->opcode & 0x00FF;
             cpu->pc += 2;
-			printf( "7XNN Set VX = VX + NN\n" );
+			//printf( "7XNN Set VX = VX + NN\n" );
         break;
 
         case 0x8000:
@@ -241,25 +241,25 @@ void chip_execute( struct chip *cpu )
                 case 0x0000: //what is written down
                     cpu->V[ ( cpu->opcode & 0x0F00 ) >> 8 ] = cpu->V[ ( cpu->opcode & 0x00F0 ) >> 4 ];
                     cpu->pc += 2;
-					printf( "8XY0 Set VX = VY\n" );
+					//printf( "8XY0 Set VX = VY\n" );
                 break;
 
                 case 0x0001: //OR
                     cpu->V[ ( cpu->opcode & 0x0F00 ) >> 8 ] |= cpu->V[ ( cpu->opcode & 0x00F0 ) >> 4 ];
                     cpu->pc += 2;
-					printf( "8XY1 Set VX |= VY\n" );
+					//printf( "8XY1 Set VX |= VY\n" );
 				break;
 
                 case 0x0002: //AND
                     cpu->V[ ( cpu->opcode & 0x0F00 ) >> 8 ] &= cpu->V[ ( cpu->opcode & 0x00F0 ) >> 4 ];
                     cpu->pc += 2;
-					printf( "8XY2 Set VX &= VY\n" );
+					//printf( "8XY2 Set VX &= VY\n" );
 				break;
 
                 case 0x0003: //XOR
                     cpu->V[ ( cpu->opcode & 0x0F00 ) >> 8 ] ^= cpu->V[ ( cpu->opcode & 0x00F0 ) >> 4 ];
                     cpu->pc += 2;
-					printf( "8XY3 Set VX ^= VY\n" );
+					//printf( "8XY3 Set VX ^= VY\n" );
                 break;
 
                 case 0x0004: //ADD
@@ -269,7 +269,7 @@ void chip_execute( struct chip *cpu )
 						cpu->V[ 0xF ] = 0;
 					cpu->V[ ( cpu->opcode & 0x0F00 ) >> 8 ] += cpu->V[ ( cpu->opcode & 0x00F0 ) >> 4 ];
                     cpu->pc += 2;
-					printf( "8XY4 Set VX += VY\n" );
+					//printf( "8XY4 Set VX += VY\n" );
                 break;
 
                 case 0x0005: //SUB
@@ -279,14 +279,14 @@ void chip_execute( struct chip *cpu )
 						cpu->V[ 0xF ] = 1;
 					cpu->V[ ( cpu->opcode & 0x0F00 ) >> 8 ] -= cpu->V[ ( cpu->opcode & 0x00F0 ) >> 4 ];
                     cpu->pc += 2;
-					printf( "8XY5 Set VX -= VY\n" );
+					//printf( "8XY5 Set VX -= VY\n" );
                 break;
 
                 case 0x0006: //SHR
                     cpu->V[ 0xF ] = cpu->V[ ( cpu->opcode & 0x0F00 ) >> 8 ] & 0x1;
                     cpu->V[ ( cpu->opcode & 0x0F00 ) >> 8 ] >>= 1;
                     cpu->pc += 2;
-					printf( "8XY6 Set VX = VY >> 1\n" );
+					//printf( "8XY6 Set VX = VY >> 1\n" );
                 break;
 
                 case 0x0007: //SUBN
@@ -296,14 +296,14 @@ void chip_execute( struct chip *cpu )
 						cpu->V[ 0xF ] = 0;
 					cpu->V[ ( cpu->opcode & 0x0F00 ) >> 8 ] = cpu->V[ ( cpu->opcode & 0x00F0 ) >> 4 ] - cpu->V[ ( cpu->opcode & 0x0F00 ) >> 8 ];
                     cpu->pc += 2;
-					printf( "8XY7 Set VX = VY - VX\n" );
+					//printf( "8XY7 Set VX = VY - VX\n" );
                 break;
 
                 case 0x000E:
                     cpu->V[ 0xF ] = cpu->V[ ( cpu->opcode & 0x0F00 ) >> 8 ] >> 7;
                     cpu->V[ ( cpu->opcode & 0x0F00 ) >> 8 ] <<= 1;
                     cpu->pc += 2;
-					printf( "8XYE Set VX = VY << 1\n" );
+					//printf( "8XYE Set VX = VY << 1\n" );
                 break;
 
                 default:
@@ -316,24 +316,24 @@ void chip_execute( struct chip *cpu )
                 cpu->pc += 4;
             else
                 cpu->pc += 2;
-			printf( "9XY0 Skip next instruction if VX != VY\n" );
+			//printf( "9XY0 Skip next instruction if VX != VY\n" );
         break;
 
         case 0xA000:
             cpu->I = cpu->opcode & 0x0FFF;
             cpu->pc += 2;
-			printf( "ANNN Set I = NNN\n" );
+			//printf( "ANNN Set I = NNN\n" );
         break;
 
         case 0xB000:
             cpu->pc = (cpu->opcode & 0x0FFF) + cpu->V[ 0 ];
-			printf( "BNNN Set PC = V0 + NNN\n" );
+			//printf( "BNNN Set PC = V0 + NNN\n" );
         break;
 
         case 0xC000:
             cpu->V[ ( cpu->opcode & 0x0F00 ) >> 8 ] = ( rand() % ( 0xFF + 1 ) ) & cpu->opcode & 0x00FF ; //start + ( rand() % (int)( stop - start + 1 ) )
             cpu->pc += 2;
-			printf( "BXNN Set VX = rand() & NN\n" );
+			//printf( "BXNN Set VX = rand() & NN\n" );
         break;
 
         case 0xD000:
@@ -360,7 +360,7 @@ void chip_execute( struct chip *cpu )
                 cpu->drawFlag = true;
                 cpu->pc += 2;
             }
-			printf( "DXYN draw( VX, VY, N )\n" );
+			//printf( "DXYN draw( VX, VY, N )\n" );
         break;
 
         case 0xE000:
@@ -371,7 +371,7 @@ void chip_execute( struct chip *cpu )
                         cpu->pc += 4;
                     else
                         cpu->pc += 2;
-					printf( "EX9E Skip next instruction if key[ VX ] is pressed \n" );
+					//printf( "EX9E Skip next instruction if key[ VX ] is pressed \n" );
                 break;
 
                 case 0x00A1:
@@ -379,7 +379,7 @@ void chip_execute( struct chip *cpu )
                         cpu->pc += 4;
                     else
                         cpu->pc += 2;
-					printf( "EXA1 Skip next instruction if key[ VX ] is not pressed \n" );
+					//printf( "EXA1 Skip next instruction if key[ VX ] is not pressed \n" );
                 break;
 
                 default:
@@ -393,7 +393,7 @@ void chip_execute( struct chip *cpu )
                 case 0x0007:
                     cpu->V[ ( cpu->opcode & 0x0F00 ) >> 8 ] = cpu->delayTimer;
                     cpu->pc += 2;
-					printf( "FX07 Set VX = delay_timer\n" );
+					//printf( "FX07 Set VX = delay_timer\n" );
                 break;
 
                 case 0x000A:
@@ -412,19 +412,19 @@ void chip_execute( struct chip *cpu )
 
                         cpu->pc += 2;
                     }
-					printf( "FX0A Wait a key input\n" );
+					//printf( "FX0A Wait a key input\n" );
                 break;
 
                 case 0x0015:
                     cpu->delayTimer = cpu->V[ ( cpu->opcode & 0x0F00 ) >> 8 ];
                     cpu->pc += 2;
-					printf( "FX15 Set delay_timer = VX\n" );
+					//printf( "FX15 Set delay_timer = VX\n" );
                 break;
 
                 case 0x0018:
                     cpu->soundTimer = cpu->V[ ( cpu->opcode & 0x0F00 ) >> 8 ];
                     cpu->pc += 2;
-					printf( "FX18 Set sound_timer = VX\n" );
+					//printf( "FX18 Set sound_timer = VX\n" );
                 break;
 
                 case 0x001E:
@@ -435,20 +435,21 @@ void chip_execute( struct chip *cpu )
                         cpu->V[ 0xF ] = 0;
                     cpu->I += cpu->V[ ( cpu->opcode & 0x0F00 ) >> 8 ];
                     cpu->pc += 2;
-					printf( "FX1E Set I += VX\n" );
+					//printf( "FX1E Set I += VX\n" );
                 break;
 
                 case 0x0029:
                     cpu->I = cpu->V[ ( cpu->opcode & 0x0F00 ) >> 8 ] * 0x5;
                     cpu->pc += 2;
-					printf( "FX29 Set I = location of sprite digit VX\n" );
+					//printf( "FX29 Set I = location of sprite digit VX\n" );
                 break;
 
                 case 0x0033:
                     cpu->memory[ cpu->I ]     =   cpu->V[ ( cpu->opcode & 0x0F00 ) >> 8 ] / 100;
                     cpu->memory[ cpu->I + 1 ] = ( cpu->V[ ( cpu->opcode & 0x0F00 ) >> 8 ] / 10 ) % 10;
                     cpu->memory[ cpu->I + 2 ] = ( cpu->V[ ( cpu->opcode & 0x0F00 ) >> 8 ] % 100 ) % 10;
-					printf( "FX33 Store BCD\n" );
+					cpu->pc += 2; //SUCK MY D***
+					//printf( "FX33 Store BCD\n" );
 				break;
 
                 case 0x0055:
@@ -456,7 +457,7 @@ void chip_execute( struct chip *cpu )
                         cpu->memory[ cpu->I + i ] = cpu->V[ i ];
                     cpu->I += (( cpu->opcode & 0x0F00 ) >> 8) + 1;
                     cpu->pc += 2;
-					printf( "FX55 Store registers\n" );
+					//printf( "FX55 Store registers\n" );
                 break;
 
                 case 0x0065:
@@ -464,7 +465,7 @@ void chip_execute( struct chip *cpu )
                         cpu->V[ i ] = cpu->memory[ cpu->I + i ];
                     cpu->I += (( cpu->opcode & 0x0F00 ) >> 8) + 1;
                     cpu->pc += 2;
-					printf( "FX55 Read registers\n" );
+					//printf( "FX55 Read registers\n" );
                 break;
 
                 default:
