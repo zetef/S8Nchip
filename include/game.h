@@ -20,7 +20,5 @@ bool game_initialize( struct game *self,
 					  struct state *game_state,
                       struct display *scrn,
                       struct chip *cpu );
-
 void game_free( struct game *self );
-
 void game_close( struct game *self );

@@ -33,46 +33,25 @@ int main( int argc, char *argv[] )
 
 			state_handle( play->play_state, play->cpu );
 
-            if ( play->cpu->drawFlag )
-            {
-                SDL_Rect rect;
-                rect.x = 0;
-                rect.y = 0;
-                rect.w = play->screen->SCREEN_WIDTH;
-                rect.h = play->screen->SCREEN_HEIGHT;
+            if ( play->cpu->drawFlag ) {
+				for( int y = 0; y < 32; ++y ) {	
+					for( int x = 0; x < 64; ++x ) {
+						SDL_Rect rect;
+						rect.x = x * play->screen->MAGNIFIER;
+						rect.y = y * play->screen->MAGNIFIER;
+						rect.w = play->screen->MAGNIFIER;
+						rect.h = play->screen->MAGNIFIER;
+						
+						
+						if(play->cpu->gfx[(y*64) + x] == 0) 
+							SDL_SetRenderDrawColor( play->screen->renderer, 0, 0, 0, 255 );			
+						else 
+							SDL_SetRenderDrawColor( play->screen->renderer, 255, 255, 255, 255 );
 
-                SDL_SetRenderDrawColor( play->screen->renderer, 0x00, 0x00, 0x00, 0xFF );
-                SDL_RenderClear( play->screen->renderer );
-
-                SDL_SetRenderDrawColor( play->screen->renderer, 0x00, 0x00, 0x00, 0xFF );
-                SDL_Rect clear =
-                {
-                    rect.x * play->screen->MAGNIFIER, rect.y * play->screen->MAGNIFIER,
-                    rect.w * play->screen->MAGNIFIER, rect.h * play->screen->MAGNIFIER
-                };
-                SDL_RenderFillRect( play->screen->renderer, &clear );
-
-                SDL_SetRenderDrawColor( play->screen->renderer, 0xFF, 0xFF, 0xFF, 0xFF );
-                for ( int i = 0; i < play->screen->SCREEN_WIDTH * play->screen->SCREEN_HEIGHT; i++ )
-                {
-                    uint16_t pos_x = rect.x + i % rect.w;
-                    uint16_t pos_y = ( rect.y + i / rect.w ) * play->screen->SCREEN_WIDTH;
-
-                    uint16_t pos = pos_x + pos_y;
-
-                    if ( play->cpu->gfx[ pos ] )
-                    {
-                        SDL_Rect r =
-                        {
-                            rect.x * play->screen->MAGNIFIER + ( i % rect.w ) * play->screen->MAGNIFIER,
-                            rect.y * play->screen->MAGNIFIER + i / rect.w * play->screen->MAGNIFIER,
-                            play->screen->MAGNIFIER,
-                            play->screen->MAGNIFIER
-                        };
-                        SDL_RenderFillRect( play->screen->renderer, &r );
-                    }
-                }
-                SDL_RenderPresent( play->screen->renderer );
+						SDL_RenderFillRect( play->screen->renderer, &rect );
+					}
+				}
+				SDL_RenderPresent( play->screen->renderer );
 
                 play->cpu->drawFlag = false;
             }
@@ -87,7 +66,3 @@ int main( int argc, char *argv[] )
 
     return 0;
 }
-
-
-
-
