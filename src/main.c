@@ -27,8 +27,6 @@ int main( int argc, char *argv[] )
 		chip_loadGame( play->cpu, argv[ 1 ] );
 
         while ( !play->play_state->quit ) {
-			//chip_cycle( cpu ); //v0.2-alpha sneek-peek
-			
             chip_cycle( play->cpu );
 
 			state_handle( play->play_state, play->cpu );
