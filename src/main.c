@@ -54,8 +54,6 @@ int main( int argc, char *argv[] )
                 play->cpu->drawFlag = false;
             }
 			
-			//if (  )
-			
 			SDL_Delay( 2 );
 		}
 	}
