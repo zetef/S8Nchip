@@ -9,16 +9,16 @@
 #include "display.h"
 #include "s8nchip.h"
 
-struct game
+typedef struct
 {
-	struct state    *play_state;
-	struct chip 	*cpu;
-	struct display  *screen;
-};
+	state    	*event;
+	chip 		*cpu;
+	display  	*screen;
+} game ;
 
-bool game_initialize( struct game *self,
-					  struct state *game_state,
-                      struct display *scrn,
-                      struct chip *cpu );
-void game_free( struct game *self );
-void game_close( struct game *self );
+bool game_initialize( game *self,
+					  state *event,
+                      display *scrn,
+                      chip *cpu );
+void game_free( game *self );
+void game_close( game *self );

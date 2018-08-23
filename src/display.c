@@ -1,6 +1,6 @@
 #include "../include/display.h"
 
-void display_initialize( struct display *scrn )
+void display_initialize( display *scrn )
 {	
 	scrn->DEFAULT_DRIVER = -1;
 	
@@ -12,7 +12,7 @@ void display_initialize( struct display *scrn )
 	scrn->DISPLAY_HEIGHT = scrn->SCREEN_HEIGHT * scrn->MAGNIFIER;
 }
 
-void display_free( struct display *scrn )
+void display_free( display *scrn )
 {
 	if ( scrn != NULL ) {
 		puts( "Freeing display..." );

@@ -2,10 +2,10 @@
 #include "../include/s8nchip.h"
 #include "../include/display.h"
 
-bool game_initialize( struct game *self,
-					  struct state *game_state,
-                      struct display *scrn,
-                      struct chip *cpu )
+bool game_initialize( game *self,
+					  state *game_state,
+                      display *scrn,
+                      chip *cpu )
 {
 	printf( 
 "Allocating memory for state...\n\
@@ -49,22 +49,19 @@ Allocating memory for cpu...\n" );
 	chip_initialize( cpu );
 	// TODO: error checking
 	
-	self->play_state = malloc( sizeof *self->play_state );
+	self->event = malloc( sizeof *self->event );
 	self->screen = malloc( sizeof *self->screen );
 	self->cpu = malloc( sizeof *self->cpu );
 
-	*self->play_state = *game_state;
-	*self->screen = *scrn; //memcpy( self->screen, scrn, sizeof( *scrn ) );
-	*self->cpu = *cpu;     //memcpy( self->cpu, cpu, sizeof( *cpu ) );
-	
-	//display_copy( scrn, self->screen ); // maybe another day
-	//chip_copy( cpu, self->cpu );
+	*self->event = *game_state;
+	*self->screen = *scrn;
+	*self->cpu = *cpu;
 	
 	state_free( game_state );
 	display_free( scrn );
 	chip_free( cpu );
 	
-	state_initialize( self->play_state );
+	state_initialize( self->event );
 	display_initialize( self->screen );
 	chip_initialize( self->cpu );
 	// TODO: error checking
@@ -105,7 +102,7 @@ Allocating memory for cpu...\n" );
 	return true;
 }
 
-void game_free( struct game *self )
+void game_free( game *self )
 {
 	if ( self != NULL ) {
 		puts( "Freeing game..." );
@@ -115,13 +112,13 @@ void game_free( struct game *self )
 	}
 }
 
-void game_close( struct game *self )
+void game_close( game *self )
 {
 	if ( self != NULL ) {
 		puts( "Closing..." );
 	
 		puts( "Freeing play state..." );
-		state_free( self->play_state );
+		state_free( self->event );
 	
 		puts( "Freeing play screen..." );
 		display_free( self->screen );

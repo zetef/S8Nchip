@@ -22,7 +22,7 @@ unsigned char s8nFontset[80] =
     0xF0, 0x80, 0xF0, 0x80, 0x80  // F
 };
 
-void chip_initialize( struct chip *cpu )
+void chip_initialize( chip *cpu )
 {
 	memset( cpu->gfx, 0, sizeof( cpu->gfx ) );
 	memset( cpu->stack, 0, sizeof( cpu->stack ) );
@@ -42,7 +42,7 @@ void chip_initialize( struct chip *cpu )
 	srand( time( NULL ) );
 }
 
-bool chip_loadGame( struct chip *cpu, const char *filename )
+bool chip_loadGame( chip *cpu, const char *filename )
 {
     printf( "Loading: %s\n", filename );
 
@@ -92,7 +92,7 @@ bool chip_loadGame( struct chip *cpu, const char *filename )
 	return true;
 }
 
-void chip_handleInput( struct chip *cpu, SDL_Event *event )
+void chip_handleInput( chip *cpu, SDL_Event *event )
 {
     if ( event->key.type == SDL_KEYDOWN )
     {
@@ -141,7 +141,7 @@ void chip_handleInput( struct chip *cpu, SDL_Event *event )
     }
 }
 
-void chip_fetch( struct chip *cpu )
+void chip_fetch( chip *cpu )
 {
 	cpu->opcode
 				= cpu->memory[ cpu->pc ] << 8 | cpu->memory[ cpu->pc + 1 ];//fetch opcode
@@ -150,20 +150,20 @@ void chip_fetch( struct chip *cpu )
     //               011010110111010 = opcode :)
 }
 
-void chip_update_timers( struct chip *cpu )
+void chip_update_timers( chip *cpu )
 {
 	if ( cpu->delayTimer ) cpu->delayTimer--;
 	if ( cpu->soundTimer ){ if ( cpu->soundTimer == 1 ) printf( "BEEP\a\n" ); cpu->soundTimer--; }
 }
 
-void chip_cycle( struct chip *cpu )
+void chip_cycle( chip *cpu )
 {
 	chip_fetch( cpu );
 	chip_execute( cpu );
 	chip_update_timers( cpu );
 }
 
-void chip_execute( struct chip *cpu )
+void chip_execute( chip *cpu )
 {
     switch ( cpu->opcode & 0xF000 ) {
         case 0x0000:
@@ -448,7 +448,7 @@ void chip_execute( struct chip *cpu )
                     cpu->memory[ cpu->I ]     =   cpu->V[ ( cpu->opcode & 0x0F00 ) >> 8 ] / 100;
                     cpu->memory[ cpu->I + 1 ] = ( cpu->V[ ( cpu->opcode & 0x0F00 ) >> 8 ] / 10 ) % 10;
                     cpu->memory[ cpu->I + 2 ] = ( cpu->V[ ( cpu->opcode & 0x0F00 ) >> 8 ] % 100 ) % 10;
-					cpu->pc += 2; //SUCK MY D***
+					cpu->pc += 2;
 					//printf( "FX33 Store BCD\n" );
 				break;
 
@@ -479,7 +479,7 @@ void chip_execute( struct chip *cpu )
     }
 }
 
-void chip_free( struct chip *cpu )
+void chip_free( chip *cpu )
 {
 	if ( cpu != NULL ) {
 		puts( "Freeing chip..." );

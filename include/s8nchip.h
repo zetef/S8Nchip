@@ -15,7 +15,7 @@
 #define INTERPRETER_MEMORY_END 0x200
 #define FONTSET_SIZE 80
 
-struct chip
+typedef struct
 {
     bool drawFlag; //doar 0x00E0(clear screen) si 0xDXYN(draw sprite to screen) seteaza flagul true
     uint32_t gfx[ MAX_GFX ];
@@ -35,13 +35,14 @@ struct chip
     uint8_t soundTimer;
 
 	//char *chipName; //for later versions, and when this interpreter will actualy work
-};
+} chip ;
 
-void chip_initialize( struct chip *cpu );
-bool chip_loadGame( struct chip *cpu, const char *filename );
-void chip_handleInput( struct chip *cpu, SDL_Event *event );
-void chip_fetch( struct chip *cpu );
-void chip_execute( struct chip *cpu );
-void chip_update_timers( struct chip *cpu );
-void chip_cycle( struct chip *cpu );
-void chip_free( struct chip *cpu );
+void chip_initialize( chip *cpu );
+bool chip_loadGame( chip *cpu, const char *filename );
+void chip_handleInput( chip *cpu, SDL_Event *event );
+void chip_fetch( chip *cpu );
+void chip_execute( chip *cpu );
+void chip_update_timers( chip *cpu );
+void chip_draw( chip * );
+void chip_cycle( chip *cpu );
+void chip_free( chip *cpu );

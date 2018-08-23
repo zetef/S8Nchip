@@ -6,7 +6,7 @@
 #include <stdbool.h>
 #include <string.h>
 
-struct display
+typedef struct
 {
 	int DEFAULT_DRIVER; // = -1
 
@@ -19,7 +19,7 @@ struct display
 
 	SDL_Window 		*window;
 	SDL_Renderer 	*renderer;
-};
+} display ;
 
-void display_initialize( struct display *scrn );
-void display_free( struct display *scrn );
+void display_initialize( display *scrn );
+void display_free( display *scrn );

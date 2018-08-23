@@ -1,11 +1,11 @@
 #include "../include/state.h"
 
-void state_initialize( struct state *game_state )
+void state_initialize( state *game_state )
 {
 	game_state->quit = false;
 }
 
-void state_handle( struct state *game_state, struct chip *cpu )
+void state_handle( state *game_state, chip *cpu )
 {
 	while ( SDL_PollEvent( &game_state->event ) != 0 ) {
         if ( game_state->event.type == SDL_QUIT ) {
@@ -20,7 +20,7 @@ void state_handle( struct state *game_state, struct chip *cpu )
     }
 }
 
-void state_free( struct state *game_state )
+void state_free( state *game_state )
 {
 	if ( game_state != NULL ) {
 		puts( "Freeing state..." );

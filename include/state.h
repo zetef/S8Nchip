@@ -6,12 +6,12 @@
 #include <stdbool.h>
 #include "s8nchip.h"
 
-struct state
+typedef struct
 {
 	SDL_Event event;
 	bool quit;
-};
+} state ;
 
-void state_initialize( struct state *game_state );
-void state_handle( struct state *game_state, struct chip *cpu );
-void state_free( struct state *game_state );
+void state_initialize( state *game_state );
+void state_handle( state *game_state, chip *cpu );
+void state_free( state *game_state );
