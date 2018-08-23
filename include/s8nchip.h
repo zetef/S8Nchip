@@ -7,6 +7,8 @@
 #include <string.h>
 #include <time.h>
 
+#include "display.h"
+
 #define MAX_GFX 64 * 32
 #define MAX_KEY 16
 #define MAX_MEMORY 4096
@@ -43,6 +45,6 @@ void chip_handleInput( chip *cpu, SDL_Event *event );
 void chip_fetch( chip *cpu );
 void chip_execute( chip *cpu );
 void chip_update_timers( chip *cpu );
-void chip_draw( chip * );
+void chip_draw( chip *cpu, display *screen );
 void chip_cycle( chip *cpu );
 void chip_free( chip *cpu );

@@ -156,6 +156,31 @@ void chip_update_timers( chip *cpu )
 	if ( cpu->soundTimer ){ if ( cpu->soundTimer == 1 ) printf( "BEEP\a\n" ); cpu->soundTimer--; }
 }
 
+void chip_draw( chip *cpu, display *screen )
+{
+	if ( cpu->drawFlag ) {
+		for( int y = 0; y < 32; ++y ) {	
+			for( int x = 0; x < 64; ++x ) {
+				SDL_Rect rect;
+				rect.x = x * screen->MAGNIFIER;
+				rect.y = y * screen->MAGNIFIER;
+				rect.w = screen->MAGNIFIER;
+				rect.h = screen->MAGNIFIER;
+				
+				if( cpu->gfx[ ( y * 64 ) + x ] == 0) 
+					SDL_SetRenderDrawColor( screen->renderer, 0, 0, 0, 255 );			
+				else 
+					SDL_SetRenderDrawColor( screen->renderer, 255, 255, 255, 255 );
+
+				SDL_RenderFillRect( screen->renderer, &rect );
+			}
+		}
+		SDL_RenderPresent( screen->renderer );
+
+        cpu->drawFlag = false;
+    }
+}
+
 void chip_cycle( chip *cpu )
 {
 	chip_fetch( cpu );
