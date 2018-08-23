@@ -6,6 +6,8 @@
 #include <stdbool.h>
 #include <string.h>
 
+#include "timer.h"
+
 typedef struct
 {
 	int DEFAULT_DRIVER; // = -1
@@ -16,6 +18,9 @@ typedef struct
 
 	int DISPLAY_WIDTH; // = x * z
 	int DISPLAY_HEIGHT; // = y * z
+
+	int SCREEN_FPS; //60
+	int SCREEN_TICK_PER_FRAME; //1000 / SCREEN_FPS
 
 	SDL_Window 		*window;
 	SDL_Renderer 	*renderer;

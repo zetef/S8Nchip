@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+
 #include "../include/s8nchip.h"
 
 unsigned char s8nFontset[80] =
@@ -58,7 +59,7 @@ bool chip_loadGame( chip *cpu, const char *filename )
 	fseek( pFile , 0 , SEEK_END );
 	size_t lSize = ftell( pFile );
 	rewind( pFile );
-	printf( "Filesize: %d\n", ( int )lSize );
+	printf( "Filesize: %d bytes\n", ( int )lSize );
 
 	// Allocate memory to contain the whole file
 	char *buffer = ( char* ) malloc( sizeof( char ) * lSize );

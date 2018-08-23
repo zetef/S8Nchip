@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <stdbool.h>
+
 #include "s8nchip.h"
 
 typedef struct
