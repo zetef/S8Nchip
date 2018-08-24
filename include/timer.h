@@ -11,13 +11,14 @@ typedef struct {
 	
 	bool paused;
 	bool started;
-} Timer ;
+} timer ;
 
-void timer_initialize( Timer *timer );
-void timer_start( Timer *timer );
-void timer_stop( Timer *timer );
-void timer_pause( Timer *timer );
-void timer_unpause( Timer *timer );
-Uint32 timer_get_ticks( Timer *timer );
-bool timer_is_started( Timer *timer );
-bool timer_is_paused( Timer *timer );
+void timer_initialize( timer *timer );
+void timer_start( timer *timer );
+void timer_stop( timer *timer );
+void timer_pause( timer *timer );
+void timer_unpause( timer *timer );
+Uint32 timer_get_ticks( const timer *timer );
+bool timer_is_started( const timer *timer );
+bool timer_is_paused( const timer *timer );
+void timer_free( timer *timer );
