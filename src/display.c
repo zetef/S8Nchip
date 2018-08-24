@@ -11,7 +11,7 @@ void display_initialize( display *scrn )
 	scrn->DISPLAY_WIDTH = scrn->SCREEN_WIDTH * scrn->MAGNIFIER;
 	scrn->DISPLAY_HEIGHT = scrn->SCREEN_HEIGHT * scrn->MAGNIFIER;
 	
-	scrn->SCREEN_FPS = 60; //360 is pretty good, but 60 was the original
+	scrn->SCREEN_FPS = 360; //360 is pretty good, but 60 was the original
 	scrn->SCREEN_TICK_PER_FRAME = 1000 / scrn->SCREEN_FPS;
 }
 
