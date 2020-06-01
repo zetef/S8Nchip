@@ -2,10 +2,8 @@
 #include "../include/s8nchip.h"
 #include "../include/display.h"
 
-bool game_initialize( game *self,
-					  state *game_state,
-                      display *scrn,
-                      chip *cpu )
+bool
+game_initialize( game *self, state *game_state, display *scrn, chip *cpu )
 {
 	printf( 
 "Allocating memory for state...\n\
@@ -71,34 +69,34 @@ Allocating memory for cpu...\n" );
         return false;
 	} else {
 		if ( !SDL_SetHint( SDL_HINT_RENDER_SCALE_QUALITY, "1" ) )
-            puts( "Linear texture filtering is not enabled" );
+			puts( "Linear texture filtering is not enabled" );
 			
 		self->screen->window = SDL_CreateWindow( "S8Nchip v0.2-alpha",
-												 SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
-												 self->screen->DISPLAY_WIDTH, self->screen->DISPLAY_HEIGHT,
-												 SDL_WINDOW_SHOWN );
+			SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
+			self->screen->DISPLAY_WIDTH, self->screen->DISPLAY_HEIGHT,
+			SDL_WINDOW_SHOWN );
 		
 		if ( self->screen->window == NULL ) {
 			printf( "Could not create window: %s\n", SDL_GetError() );
-            return false;
+			return false;
 		} else {
 			self->screen->renderer = SDL_CreateRenderer( self->screen->window,
-														 self->screen->DEFAULT_DRIVER,
-														 SDL_FALSE );
+				self->screen->DEFAULT_DRIVER,
+				SDL_FALSE );
 														 
 			if ( self->screen->renderer == NULL ) {
 				printf( "could not create renderer: %s\n", SDL_GetError() );
-                return false;
+				return false;
 			}/* else {
-                int imgFlags = IMG_INIT_PNG;
-                if ( !(IMG_Init( imgFlags ) & imgFlags ) ){
-                    printf( "could not init sdl_img: %s\n", IMG_GetError() );
-                    success = false;
-                }
-            }*/
+				int imgFlags = IMG_INIT_PNG;
+				if ( !(IMG_Init( imgFlags ) & imgFlags ) ){
+					printf( "could not init sdl_img: %s\n", IMG_GetError() );
+					success = false;
+				}
+			}*/
 		}
 	}
-					 
+
 	return true;
 }
 
