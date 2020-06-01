@@ -19,7 +19,6 @@ void display_free( display *scrn )
 {
 	if ( scrn != NULL ) {
 		puts( "Freeing display..." );
-		
 		free( scrn );
 	} else {
 		puts( "No dispaly to free!" );

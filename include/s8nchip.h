@@ -1,6 +1,6 @@
 #pragma once
 
-#include <SDL.h>
+#include <SDL2/SDL.h>
 #include <stdio.h>
 #include <stdint.h>
 #include <stdbool.h>
@@ -19,22 +19,22 @@
 
 typedef struct
 {
-    bool drawFlag; //doar 0x00E0(clear screen) si 0xDXYN(draw sprite to screen) seteaza flagul true
-    uint32_t gfx[ MAX_GFX ];
-    uint8_t key[ MAX_KEY ]; //0xF
+	bool drawFlag; //doar 0x00E0(clear screen) si 0xDXYN(draw sprite to screen) seteaza flagul true
+	uint32_t gfx[ MAX_GFX ];
+	uint8_t key[ MAX_KEY ]; //0xF
 
-    uint8_t memory[ MAX_MEMORY ];
-    uint8_t V[ MAX_V_REGISTERS ];
+	uint8_t memory[ MAX_MEMORY ];
+	uint8_t V[ MAX_V_REGISTERS ];
 
-    uint16_t stack[ MAX_STACKS ];
-    uint16_t sp;
+	uint16_t stack[ MAX_STACKS ];
+	uint16_t sp;
 
-    uint16_t I;
-    uint16_t pc;
+	uint16_t I;
+	uint16_t pc;
 	uint16_t opcode;
 
 	uint8_t delayTimer;
-    uint8_t soundTimer;
+	uint8_t soundTimer;
 
 	//char *chipName; //for later versions, and when this interpreter will actualy work
 } chip ;

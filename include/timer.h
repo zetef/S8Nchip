@@ -1,6 +1,6 @@
 #pragma once
 
-#include <SDL.h>
+#include <SDL2/SDL.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
@@ -8,7 +8,7 @@
 typedef struct {
 	Uint32 start_ticks;
 	Uint32 paused_ticks;
-	
+
 	bool paused;
 	bool started;
 } timer ;

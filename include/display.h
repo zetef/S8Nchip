@@ -1,6 +1,6 @@
 #pragma once
 
-#include <SDL.h>
+#include <SDL2/SDL.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
@@ -22,7 +22,7 @@ typedef struct
 	int SCREEN_FPS;
 	int SCREEN_TICK_PER_FRAME; //1000 / SCREEN_FPS
 
-	SDL_Window 		*window;
+	SDL_Window 	*window;
 	SDL_Renderer 	*renderer;
 } display ;
 

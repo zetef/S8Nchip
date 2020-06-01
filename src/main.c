@@ -1,4 +1,4 @@
-#include <SDL.h>
+#include <SDL2/SDL.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <time.h>
@@ -19,11 +19,11 @@ int main( int argc, char *argv[] )
 	state *event 	= malloc( sizeof *event );  
 	display *screen	= malloc( sizeof *screen ); 
 	chip *s8nchip 	= malloc( sizeof *s8nchip );
-	game *play 		= malloc( sizeof *play );   
+	game *play 	= malloc( sizeof *play );   
 	
-    if ( !game_initialize( play, event, screen, s8nchip ) ) {
-        puts( "could not init!" );
-    } else {
+	if ( !game_initialize( play, event, screen, s8nchip ) ) {
+		puts( "could not init!" );
+	} else {
 		state_free( event );
 		display_free( screen );
 		chip_free( s8nchip );
@@ -38,10 +38,10 @@ int main( int argc, char *argv[] )
 		timer_initialize( capTimer );
 		//timer_start( fpsTimer );
 
-        while ( !play->event->quit ) {
+		while ( !play->event->quit ) {
 			timer_start( capTimer );
 			
-            chip_cycle( play->cpu );
+			chip_cycle( play->cpu );
 			state_handle( play->event, play->cpu );
 			chip_draw( play->cpu, play->screen );
 			
@@ -59,5 +59,5 @@ int main( int argc, char *argv[] )
 	}
 
 	game_close( play );
-    return 0;
+	return 0;
 }

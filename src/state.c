@@ -8,16 +8,16 @@ void state_initialize( state *game_state )
 void state_handle( state *game_state, chip *cpu )
 {
 	while ( SDL_PollEvent( &game_state->event ) != 0 ) {
-        if ( game_state->event.type == SDL_QUIT ) {
-            game_state->quit = true;
-        } else if ( game_state->event.key.type == SDL_KEYDOWN ) {
-            if ( game_state->event.key.keysym.sym == SDLK_ESCAPE ) {
-                game_state->quit = true;
-            }
-        }
+	if ( game_state->event.type == SDL_QUIT ) {
+		game_state->quit = true;
+	} else if ( game_state->event.key.type == SDL_KEYDOWN ) {
+		if ( game_state->event.key.keysym.sym == SDLK_ESCAPE ) {
+			game_state->quit = true;
+		}
+	}
 
-        chip_handleInput( cpu, &game_state->event );
-    }
+	chip_handleInput( cpu, &game_state->event );
+	}
 }
 
 void state_free( state *game_state )
